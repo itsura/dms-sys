@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+   <!--                           -->
+   <!--  Web Script Configuration -->
+   <!--                           -->
+
+   <bean id="webscripts.configsource" class="org.springframework.extensions.config.source.UrlConfigSource">
+      <constructor-arg>
+         <list>
+            <value>classpath:alfresco/web-scripts-config.xml</value>
+            <value>classpath:alfresco/web-scripts-cmis-config.xml</value>
+            <value>classpath:alfresco/extension/web-api-config-custom.xml</value>  <!--  for backwards compatibility -->
+            <value>classpath:alfresco/extension/web-scripts-config-custom.xml</value>
+            <value>classpath:alfresco/extension/web-scripts-cmis-config.xml</value>
+         </list>
+      </constructor-arg>
+   </bean>
+
+   <bean id="webscripts.config" class="org.springframework.extensions.config.xml.XMLConfigService" init-method="init">
+      <constructor-arg>
+         <ref bean="webscripts.configsource" />
+      </constructor-arg>
+   </bean>
+ 
+ 
+   <!--                     -->
+   <!--  Web Script Storage -->
+   <!--                     -->
+
+   <bean id="webscripts.repoclasspathstore" class="org.dms.sys.repo.web.scripts.RepoClassPathStore" abstract="true" />
+
+   <bean id="webscripts.store" parent="webscripts.repoclasspathstore">
+      <property name="mustExist"><value>false</value></property>
+      <property name="classPath"><value>webscripts</value></property>
+   </bean>
+   
+   <bean id="webscripts.store.alfresco" parent="webscripts.repoclasspathstore">
+      <property name="mustExist"><value>false</value></property>
+      <property name="classPath"><value>dms-sys/webscripts</value></property>
+   </bean>
+
+   <bean id="webscripts.store.client" parent="webscripts.repoclasspathstore">
+      <property name="mustExist"><value>true</value></property>
+      <property name="classPath"><value>dms-sys/templates/webscripts</value></property>
+   </bean>
+   
+   <bean id="webscripts.store.client.extension" parent="webscripts.classpathstore">
+      <property name="classPath"><value>dms-sys/extension/templates/webscripts</value></property>
+   </bean>
+   
+   <bean id="webscripts.searchpath" class="org.springframework.extensions.webscripts.SearchPath">
+      <property name="searchPath">
+          <list>
+             <ref bean="webscripts.store.client.extension" />
+             <ref bean="webscripts.store.client" />
+             <ref bean="webscripts.store.alfresco" />
+             <ref bean="webscripts.store" />
+          </list>
+      </property>
+   </bean>
+
+
+   <!--                                                -->
+   <!--  Web Script Repository (Server-Tier) Container -->
+   <!--                                                -->
+   
+   <bean id="webscripts.repo.registry.templateprocessor" class="org.springframework.extensions.webscripts.TemplateProcessorRegistry" />      
+
+   <bean id="webscripts.repo.registry.scriptprocessor" class="org.springframework.extensions.webscripts.ScriptProcessorRegistry" />
+   
+   
+   <bean id="webscripts.index.prototype" class="org.springframework.extensions.webscripts.JaxRSUriIndex" scope="prototype"/>
+   
+   <bean id="webscripts.registry.prototype" parent="webscripts.registry" scope="prototype">
+      <property name="uriIndex" ref="webscripts.index.prototype" />
+   </bean>
+
+   <!--                            -->
+   <!--  Web Script Authenticators -->
+   <!--                            -->
+
+   <!--  HTTP Basic Authenticator (Servlet based) -->
+   <bean id="webscripts.authenticator.basic" class="org.dms.sys.repo.web.scripts.servlet.BasicHttpAuthenticatorFactory">
+   </bean>
+
+   <!--            -->
+   <!--  API Beans -->
+   <!--            -->
+
+	<bean id="webscript.org.dms.sys.webscripts.example.example.get"
+		class="org.dms.sys.webscripts.example.Example" parent="webscript" />
+</beans>

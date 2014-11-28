@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	 <import resource="classpath:dms-sys-repo-api-impl/logging-context.xml"/>
+	 <import resource="classpath:dms-sys-repo-api-impl/bootstrap-context.xml"/>
+	 <import resource="classpath:dms-sys-repo-api-impl/semantic-db-context.xml"/>
+	
+	 <!--  Import Spring WebScripts framework beans -->
+     <import resource="classpath*:org/springframework/extensions/webscripts/*-context.xml" />
+</beans>

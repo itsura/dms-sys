@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<display-name>Spring Surf Application</display-name>
+
+	<!-- Spring Application Context location -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/config/web-application-config.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>log4jExposeWebAppRoot</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<!-- Spring Context Loader listener - can disable loading of context if 
+		runtime config changes are needed -->
+	<listener>
+		<listener-class>org.dms.sys.web.app.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Web Application Context listener - session create/destroy debugging 
+		and bootstrap Spring init -->
+	<listener>
+		<listener-class>org.dms.sys.web.app.ContextListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
+	<!-- Spring MVC Dispatcher Servlet -->
+	<servlet>
+		<servlet-name>apiServlet</servlet-name>
+		<servlet-class>org.springframework.extensions.webscripts.servlet.WebScriptServlet</servlet-class>
+		<init-param>
+			<param-name>authenticator</param-name>
+			<param-value>webscripts.authenticator.basic</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>apiServlet</servlet-name>
+		<url-pattern>/service/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>apiServlet</servlet-name>
+		<url-pattern>/s/*</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+</web-app>

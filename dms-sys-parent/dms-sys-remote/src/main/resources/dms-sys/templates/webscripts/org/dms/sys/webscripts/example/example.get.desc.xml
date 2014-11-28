@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<webscript>
+	<shortname>Example</shortname>
+	<description>Sample java backed webscript</description>
+	<url>/example</url>
+	<authentication>none</authentication>
+</webscript>

@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>dms-sys-remote</artifactId>
+  <name>dms-sys-remote</name>
+  
+  <parent>
+  	<groupId>org.dms.sys</groupId>
+  	<artifactId>dms-sys-parent</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>org.dms.sys</groupId>
+  		<artifactId>dms-sys-core</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.dms.sys</groupId>
+  		<artifactId>dms-sys-repo-api</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.dms.sys</groupId>
+  		<artifactId>dms-sys-repo-api-impl</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  </dependencies>
+  
+</project>
