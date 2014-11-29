@@ -35,10 +35,4 @@
    <!-- Support for Default Surf Controllers -->
    <bean id="simpleControllerHandlerAdapter" class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
    
-   <!-- SURF: support for Surf application config -->
-   <import resource="classpath*:org/springframework/extensions/surf/application/*-context.xml" />
-   
-   <!-- SURF: support for custom application configuration overrides -->
-   <import resource="classpath*:org/springframework/extensions/surf/override/*-context.xml" />  
-   
 </beans>
